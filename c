@@ -1,1 +1,1 @@
-node ~/ctx/core/index.js "$@"
+node $CTXPATH/bin/c.js "$@"
