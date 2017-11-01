@@ -5,4 +5,4 @@ var url = process.env.CTXURL,
 		conn = new Conn(url, user),
 		ctx = conn.sub(sub);
 
-ctx.put(process.argv.slice(2).join(' '), res => console.log(res));
+ctx.put(process.argv.slice(2).join(' ')).then(console.log);

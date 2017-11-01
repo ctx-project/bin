@@ -3,4 +3,4 @@ var url = process.env.CTXURL,
 		Conn = require('../connection'),
 		conn = new Conn(url, user);
 
-conn.hint(process.argv.slice(2).join(' '), res => console.log(res));
+conn.hints(process.argv.slice(2).join(' ')).then(console.log);
