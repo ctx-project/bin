@@ -1,2 +1,1 @@
-export CTXSUB="$@"
-env | grep CTX
+node $CTXPATH/bin/t.js "$@"

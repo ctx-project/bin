@@ -1,6 +1,14 @@
-var url = process.env.CTXURL,
-		user = process.env.CTXUSER,
-		Conn = require('../connection'),
-		conn = new Conn(url, user);
+var l = console.log,
+		args = process.argv.slice(2),
+		item = args.join(' '),
+		fs = require('fs'),
+		fp = process.env.CTXPATH + '/bin/session.ctx',
+		data = fs.readFileSync(fp, {encoding: 'utf8', flag: 'a+'}).split('\n'),
+		Conn = require('../connection');
 
-conn.hints(process.argv.slice(2).join(' ')).then(console.log);
+if(data.length < 2) {
+	l('use ct first');
+	process.exit(1);
+}
+
+new Conn(data[0], data[1]).hints(item).then(l);
