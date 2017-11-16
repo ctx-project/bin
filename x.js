@@ -4,7 +4,9 @@ var l = console.log,
 		fs = require('fs'),
 		fp = process.env.CTXPATH + '/bin/session.ctx',
 		data = fs.readFileSync(fp, {encoding: 'utf8', flag: 'a+'}).split('\n'),
-		Conn = require('../connection');
+		Conn = require('../connection'),
+		parse = require('@ctx/language'),
+		colors = require('colors');
 
 if(!data[data.length - 1]) data.pop();
 
@@ -25,4 +27,12 @@ data.push('');
 
 fs.writeFileSync(fp, data.join('\n'), {encoding: 'utf8', flag: 'w+'});
 
-new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(l);
+new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(show);
+
+function show(text) {
+	l('  '.inverse);
+	parse.text(text).forEach(item => {
+		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body.italic).join(' ') + (item.id ? (' ' + item.id.dim) : ''));
+	});
+	l('  '.inverse);
+}
