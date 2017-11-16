@@ -30,9 +30,12 @@ fs.writeFileSync(fp, data.join('\n'), {encoding: 'utf8', flag: 'w+'});
 new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(show);
 
 function show(text) {
-	l('  '.inverse);
+	process.stdout.write('\033c');
+	l('');
+	l(` ${data[2]} ${data[3]} `.inverse);
+	l('');
 	parse.text(text).forEach(item => {
-		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body.italic).join(' ') + (item.id ? (' ' + item.id.dim) : ''));
+		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body).join(' ') + (item.id ? (' ' + item.id.dim) : ''));
 	});
-	l('  '.inverse);
+	l('');
 }
