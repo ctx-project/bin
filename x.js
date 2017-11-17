@@ -30,14 +30,14 @@ fs.writeFileSync(fp, data.join('\n'), {encoding: 'utf8', flag: 'w+'});
 new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(show);
 
 function show(text) {
-	var title = `  ${data[2]} ${data[3]}  `,
-			padder = new Array(title.length + 1);
+	var title = `  ${data.slice(2).filter(d => d).join(' ')}  `,
+			padder = new Array(title.length + 1).join(' ').inverse;
 	
 	l('\033c');
 	
-	l(padder.join(' ').inverse);
+	l(padder);
 	l(title.toUpperCase().inverse);
-	l(padder.join(' ').inverse);
+	l(padder);
 	
 	l('');
 	
