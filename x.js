@@ -42,7 +42,7 @@ function show(text) {
 	l('');
 	
 	parse.text(text).forEach(item => {
-		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body).join(' ') + (item.id ? (' ' + item.id.dim) : ''));
+		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body).join(' ') + (item.id ? ` ~${item.id}`.dim : ''));
 	});
 	
 	l('');
