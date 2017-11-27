@@ -5,8 +5,11 @@ var l = console.log,
 		fp = process.env.CTXPATH + '/bin/session.ctx',
 		data = fs.readFileSync(fp, {encoding: 'utf8', flag: 'a+'}).split('\n'),
 		Conn = require('../connection'),
-		parse = require('@ctx/language'),
-		colors = require('colors');
+		lang = require('@ctx/language'),
+		parse = lang.parse,
+		compose = lang.compose,
+		colors = require('./colors'),
+		serializeText = compose.getTextSerializer({tag: colors.codes.bright, id: colors.codes.dim}, '\n');
 
 if(!data[data.length - 1]) data.pop();
 
@@ -31,19 +34,18 @@ new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(show);
 
 function show(text) {
 	var title = `  ${data.slice(2).filter(d => d).join(' ')}  `,
-			padder = new Array(title.length + 1).join(' ').inverse;
+			padder = colors.format(new Array(title.length + 1).join(' '), 'inverse');
 	
 	l('\033c');
 	
 	l(padder);
-	l(title.toUpperCase().inverse);
+	l(colors.format(title.toUpperCase(), 'inverse'));
 	l(padder);
 	
 	l('');
 	
-	parse.text(text).forEach(item => {
-		l(item.tokens.map(t => t.type == 'tag' ? t.body.bold : t.body).join(' ') + (item.id ? ` ~${item.id}`.dim : ''));
-	});
+	l(serializeText(parse.text(text)));
 	
 	l('');
 }
+
