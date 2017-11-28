@@ -10,10 +10,10 @@ if(args.length == 2) {
 	fs.writeFileSync(fp, data.join('\n'), {encoding: 'utf8', flag: 'w+'});
 }
 
-l('base:' + data[0]);
-l('user:' + data[1]);
+l('base: ' + data[0]);
+l('user: ' + data[1]);
 l('topic:' + data[2] || '');
-l('view:' + data[3] || '');
+l('view: ' + data[3] || '');
 
 if(args.length && args.length != 2) {
 	l("");

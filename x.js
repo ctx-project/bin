@@ -30,10 +30,12 @@ data.push('');
 
 fs.writeFileSync(fp, data.join('\n'), {encoding: 'utf8', flag: 'w+'});
 
+data.pop();
+
 new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).get().then(show);
 
 function show(text) {
-	var title = `  ${data.slice(2).filter(d => d).join(' ')}  `,
+	var title = `  ${data.slice(2).join(' | ')}  `,
 			padder = colors.format(new Array(title.length + 1).join(' '), 'inverse');
 	
 	l('\033c');

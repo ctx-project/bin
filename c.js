@@ -21,4 +21,13 @@ if(data.length < 4) {
 	process.exit(1);
 }
 
-new Conn(data[0], data[1]).sub(data[2]).sub(data[3]).put(item).then(l);
+data.pop();
+
+var ctx = new Conn(data[0], data[1]).sub(data[2]).sub(data[3]);
+ctx.put(item).then(show);
+
+function show(item) {
+	l(`ctx: ${ctx.getQuery()}`);
+	l(`received: ${item}`);
+}
+
